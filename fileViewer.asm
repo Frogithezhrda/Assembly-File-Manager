@@ -305,7 +305,7 @@ ReadFromFile:
     mov byte [ebx], 0       ;Replace \n with null terminator
 
     ;Opn the file
-    mov eax, 5              ; sys_open
+    mov eax, 5              ; sys open
     mov ebx, fileName
     mov ecx, 0              ;readonly
     int 0x80
@@ -314,7 +314,7 @@ ReadFromFile:
     mov ebx, eax            ; Save file descriptor
 
     ;read the file
-    mov eax, 3              ; sys_read
+    mov eax, 3              ; sys read
     mov ecx, fileBuffer
     mov edx, 4096
     int 0x80
@@ -331,7 +331,7 @@ ReadFromFile:
     pop edx                 ;Get bytes read as length
     
     test edx, edx
-    jle endReadFile         ;if nothing read, exit
+    jle endReadFile         ;if nothing read exit
     
     mov eax, 4              ;write
     mov ebx, 1              ;stdout
@@ -341,11 +341,8 @@ ReadFromFile:
     
     call PrintNewLine
     jmp endReadFile
-
+	; in case of error just end
     fileError:
-    ;Print error message (you can add an error message in .data section)
-    ;For now, just exit
-    
     endReadFile:
     mov esp, ebp
     pop ebp
